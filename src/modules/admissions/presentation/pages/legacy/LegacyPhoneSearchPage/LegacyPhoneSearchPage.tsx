@@ -1,5 +1,12 @@
 'use client';
 
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+
+import * as Yup from 'yup';
+
+import { useRouter } from 'next/navigation';
+
+import { CheckCircleOutlined, WarningOutlined, ErrorOutlined, InfoOutlined } from '@mui/icons-material';
 import {
   Alert,
   AlertColor,
@@ -11,37 +18,42 @@ import {
   List,
   TextField,
 } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import { useFormik } from 'formik';
+
+import { useAdmissionsControllerSearchLegacy } from '@/providers/service/admissions/admissions';
+import { LegacyStudentRow } from '@/providers/service/app.schemas';
+
+import { FormattedMessage, useFormattedMessage } from '@/theme/FormattedMessage';
 import { PageContainer } from '@/theme/Page';
-import { CheckCircleOutlined, WarningOutlined, ErrorOutlined, InfoOutlined } from '@mui/icons-material';
 
 import { StudentListItem } from '@/modules/admissions/presentation/components/StudentListItem';
+import { encodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookupToken';
 
 import messages from './messages';
-import { FormattedMessage, useFormattedMessage } from '@/theme/FormattedMessage';
-import { useAdmissionsControllerSearchLegacy } from '@/providers/service/admissions/admissions';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { LegacyStudentRow } from '@/providers/service/app.schemas';
-import { encodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookupToken';
-import { useRouter } from 'next/navigation';
 
 type Values = { phone: string };
 
+type RefinedData = {
+  notAlreadyRegistered: LegacyStudentRow[];
+  alreadyRegistered: LegacyStudentRow[];
+};
+
 export function LegacyPhoneSearchPage() {
   const router = useRouter();
-  const title = useFormattedMessage(messages.title);
-  const subtitle = useFormattedMessage(messages.subtitle);
+  const title = useFormattedMessage<string>(messages.title);
+  const subtitle = useFormattedMessage<string>(messages.subtitle);
 
-  const phoneNumberLabel = useFormattedMessage(messages.phoneNumberLabel);
-  const phoneNumberLengthError = useFormattedMessage(messages.phoneNumberLengthError);
+  const phoneNumberLabel = useFormattedMessage<string>(messages.phoneNumberLabel);
+  const phoneNumberLengthError = useFormattedMessage<string>(messages.phoneNumberLengthError);
 
-  const schema = Yup.object({
-    phone: Yup.string()
-      .trim()
-      .length(11, phoneNumberLengthError as string),
-  });
+  const schema = useMemo(
+    () =>
+      Yup.object({
+        phone: Yup.string().trim().length(11, phoneNumberLengthError),
+      }),
+    [phoneNumberLengthError],
+  );
 
   const { values, handleChange, touched, errors } = useFormik<Values>({
     initialValues: { phone: '' },
@@ -65,13 +77,20 @@ export function LegacyPhoneSearchPage() {
     refetch();
   }, []);
 
-  const debouncedAdmissionsFetch = useRef(debounce(refetchAdmissions, 500));
+  const debouncedAdmissionsFetch = useRef<ReturnType<typeof debounce> | null>(null);
+
+  useEffect(() => {
+    debouncedAdmissionsFetch.current = debounce(refetchAdmissions, 500);
+    return () => {
+      debouncedAdmissionsFetch.current?.clear();
+    };
+  }, [refetchAdmissions]);
 
   useEffect(() => {
     if (values.phone.trim() && schema.isValidSync(values)) {
-      debouncedAdmissionsFetch.current();
+      debouncedAdmissionsFetch.current?.();
     }
-  }, [values.phone, refetchAdmissions]);
+  }, [schema, values]);
 
   const alertConfigs = useMemo<{
     severity: AlertColor;
@@ -87,14 +106,27 @@ export function LegacyPhoneSearchPage() {
       return { severity: 'error', message: messages.phoneNumberSearchError };
     }
     return null;
-  }, [admissionSearchQuery.isSuccess, admissionSearchQuery.data?.data?.length]);
+  }, [admissionSearchQuery.isError, admissionSearchQuery.isSuccess, admissionSearchQuery.data?.data?.length]);
 
   const onItemSelect = useCallback((row: Partial<LegacyStudentRow>) => {
     if (!row.grNumber || !row.phone) return;
     const lookupQuery = row.grNumber || row.phone;
     const token = encodeLegacyLookupToken(lookupQuery);
     router.push(`/admissions/application?legacy=${encodeURIComponent(token)}`);
-  }, []);
+  }, [router]);
+
+  const refinedData: RefinedData = useMemo<RefinedData>(() => {
+    if (!admissionSearchQuery.data?.data) return { notAlreadyRegistered: [], alreadyRegistered: [] };
+    return admissionSearchQuery.data.data.reduce<RefinedData>((acc: RefinedData, row: LegacyStudentRow) => {
+      if (row.alreadyRegistered) {
+        acc.alreadyRegistered.push(row);
+      } else {
+        acc.notAlreadyRegistered.push(row);
+      }
+      return acc;
+    }, { notAlreadyRegistered: [], alreadyRegistered: [] });
+  }, [admissionSearchQuery.data?.data]);
+  const { notAlreadyRegistered, alreadyRegistered } = refinedData;
 
   return (
     <PageContainer pageTitle={{ title: { text: title, language: 'ur' }, subtitle: { text: subtitle, language: 'ur' } }}>
@@ -176,12 +208,26 @@ export function LegacyPhoneSearchPage() {
             <FormattedMessage message={alertConfigs.message} language="ur" />
           </Alert>
         ) : null}
-        {admissionSearchQuery.isSuccess && admissionSearchQuery.data?.data?.length ? (
+        {admissionSearchQuery.isSuccess && notAlreadyRegistered?.length ? (
           <List sx={{ direction: 'rtl' }}>
-            {admissionSearchQuery.data?.data?.map((row) => (
+            {notAlreadyRegistered.map((row) => (
               <StudentListItem key={row.id} row={row} onItemSelect={onItemSelect} />
             ))}
           </List>
+        ) : null}
+        {admissionSearchQuery.isSuccess && alreadyRegistered?.length ? (
+          <Box sx={{ mt: 2 }}>
+            <Alert severity="info" sx={{ direction: 'rtl', textAlign: 'right', fontFamily: 'var(--font-mehr)', gap: 1 }}
+            icon={<CheckCircleOutlined />}
+            >
+              <FormattedMessage message={messages.alreadyRegisteredHeading} language="ur" />
+            </Alert>
+            <List sx={{ direction: 'rtl' }}>
+              {alreadyRegistered.map((row) => (
+                <StudentListItem key={row.grNumber} row={row} success />
+              ))}
+            </List>
+          </Box>
         ) : null}
       </Container>
     </PageContainer>

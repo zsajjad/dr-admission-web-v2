@@ -40,6 +40,11 @@ const messages = defineMessages({
     id: `${domain}.phoneNumberSearchSuccessDescription`,
     defaultMessage: 'طالب علم کو منتخب کر کے ابتدائی سے پہلے فرم کو پہلے پر لگائیں۔',
   },
+  alreadyRegisteredHeading: {
+    id: `${domain}.alreadyRegisteredHeading`,
+    defaultMessage:
+      'ان طلبا کا داخلہ اس سال کے لئے ہوچکا ہے، برائے کرم فیس جمع کروا کر پہلے آئیں پہلے پائیں کی بنیاد پر داخلہ کنفرم کریں',
+  },
 });
 
 export default messages;

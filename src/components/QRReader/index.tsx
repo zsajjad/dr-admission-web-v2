@@ -1,14 +1,14 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 
-import { Alert, Box, Button, CircularProgress } from '@mui/material';
 import { ArrowCircleLeftOutlined, ArrowForwardOutlined } from '@mui/icons-material';
+import { Alert, Box, Button, CircularProgress } from '@mui/material';
 
 import { FormattedMessage, useFormattedMessage } from '@/theme/FormattedMessage';
 import { Typography } from '@/theme/Typography';
 
+import messages from './messages';
 import { QRReaderProps } from './types';
 import useQrReader from './useQrReader';
-import messages from './messages';
 
 const QRReader = forwardRef(({ onComplete, isLoading, label, error: contextError }: QRReaderProps, ref) => {
   const { canvasRef, videoRef, error, data, setData, startCamera, stopCamera, setError, cameraIsPaused, status, hint } =

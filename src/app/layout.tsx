@@ -5,13 +5,13 @@ import localFont from 'next/font/local';
 
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
-import { FirebaseObserver } from '@/platform/Firebase/FirebaseObserver';
-
 import { ErrorBoundaryWrapper } from '@/components/ErrorBoundary';
 
 import { IntlRegistry } from '@/registry/Intl';
 import { ReactQueryRegistry } from '@/registry/ReactQuery';
 import { CustomThemeProvider } from '@/registry/Theme';
+
+import { FirebaseObserver } from '@/platform/Firebase/FirebaseObserver';
 
 import { LocaleProvider } from '@/contexts/LocaleContext';
 

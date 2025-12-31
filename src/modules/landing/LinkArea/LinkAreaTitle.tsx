@@ -1,6 +1,7 @@
 import { FormattedMessage } from '@/theme/FormattedMessage';
 
 import messages from '../messages';
+
 import { styles } from './styles';
 
 export function LinkAreaTitle() {

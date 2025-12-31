@@ -1,9 +1,11 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { Typography } from '@/theme/Typography';
-import messages from './messages';
+
 import { useFormattedMessage } from '@/theme/FormattedMessage';
+import { Typography } from '@/theme/Typography';
+
+import messages from './messages';
 
 export default function HomeClosing() {
   const message = useFormattedMessage(messages.closingQuote);

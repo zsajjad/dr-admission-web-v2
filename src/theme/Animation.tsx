@@ -1,5 +1,6 @@
-import animations from '@/assets/animations';
 import Lottie, { LottieComponentProps } from 'lottie-react';
+
+import animations from '@/assets/animations';
 
 export interface AnimationProps extends Omit<LottieComponentProps, 'animationData'> {
   title: keyof typeof animations;

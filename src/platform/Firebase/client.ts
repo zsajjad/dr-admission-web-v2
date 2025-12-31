@@ -1,7 +1,7 @@
-import { firebaseConfig } from '@/config';
-
-import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAnalytics, isSupported, logEvent, type Analytics } from 'firebase/analytics';
+import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
+
+import { firebaseConfig } from '@/config';
 
 let firebaseApp: FirebaseApp | null = null;
 let analyticsPromise: Promise<Analytics | null> | null = null;

@@ -6,8 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { useLocale } from '@/contexts/LocaleContext';
 import { createTheme } from '@/theme/MuiConfigs/create-theme';
+
+import { useLocale } from '@/contexts/LocaleContext';
 
 import { EmotionCacheProvider } from './_emotion_cache';
 

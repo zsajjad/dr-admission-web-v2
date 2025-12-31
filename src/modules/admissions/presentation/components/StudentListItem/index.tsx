@@ -1,9 +1,10 @@
+import { memoize } from 'lodash';
+
 import { Box, ListItemButton } from '@mui/material';
 
 import { FormattedMessage } from '@/theme/FormattedMessage';
 
 import messages from './messages';
-import { memoize } from 'lodash';
 
 interface StudentListItemRow {
   id: string;
@@ -15,7 +16,8 @@ interface StudentListItemRow {
 
 interface StudentListItemProps {
   row: StudentListItemRow;
-  onItemSelect: (row: StudentListItemRow) => void;
+  success?: boolean;
+  onItemSelect?: (row: StudentListItemRow) => void;
 }
 
 const getRelationPart = memoize((gender: string) => {
@@ -27,7 +29,7 @@ const getRelationPart = memoize((gender: string) => {
   return relation;
 });
 
-export function StudentListItem({ row, onItemSelect }: StudentListItemProps) {
+export function StudentListItem({ row, success, onItemSelect }: StudentListItemProps) {
   const relation = getRelationPart(row.gender!);
   const relationPart =
     row.fatherName && relation ? `${relation} ${row.fatherName}` : row.fatherName ? row.fatherName : '';
@@ -35,7 +37,7 @@ export function StudentListItem({ row, onItemSelect }: StudentListItemProps) {
   return (
     <ListItemButton
       key={row.id}
-      onClick={() => onItemSelect(row)}
+      onClick={() => onItemSelect?.(row)}
       sx={{
         gap: 1,
         direction: 'ltr',
@@ -46,7 +48,11 @@ export function StudentListItem({ row, onItemSelect }: StudentListItemProps) {
         p: 2,
         mb: 2,
         cursor: 'pointer',
-        backgroundColor: 'background.paper',
+        backgroundColor: success ? 'rgb(229, 246, 253)' : 'background.paper',
+        '&:hover': {
+          backgroundColor: success ? 'rgb(229, 246, 253)' : 'background.paper',
+          cursor: success ? 'default' : 'pointer',
+        },
       }}
     >
       <Box

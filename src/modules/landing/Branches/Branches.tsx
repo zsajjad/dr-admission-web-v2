@@ -1,9 +1,12 @@
+import Image from 'next/image';
+
 import { Box } from '@mui/material';
 
-import { styles } from './styles';
-import Image from 'next/image';
-import messages from '../messages';
 import { FormattedMessage } from '@/theme/FormattedMessage';
+
+import messages from '../messages';
+
+import { styles } from './styles';
 
 export function LandingBranches() {
   return (

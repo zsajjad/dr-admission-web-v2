@@ -3,6 +3,7 @@ import { Box, Button } from '@mui/material';
 import { FormattedMessage } from '@/theme/FormattedMessage';
 
 import messages from '../messages';
+
 import { styles } from './styles';
 
 export function LegacyContent(props: { onBack: () => void }) {

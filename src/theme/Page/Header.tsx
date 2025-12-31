@@ -6,8 +6,8 @@ import Link from 'next/link';
 
 import { Box, Container } from '@mui/material';
 
-import { Logo } from '../Logo';
 import { FormattedMessage } from '../FormattedMessage';
+import { Logo } from '../Logo';
 
 import messages from './messages';
 

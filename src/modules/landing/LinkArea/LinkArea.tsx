@@ -1,12 +1,15 @@
 'use client';
 
+import Link from 'next/link';
+
 import { Box, Button, Container } from '@mui/material';
+
+import { FormattedMessage } from '@/theme/FormattedMessage';
+
+import messages from '../messages';
 
 import { LinkAreaTitle } from './LinkAreaTitle';
 import { styles } from './styles';
-import Link from 'next/link';
-import { FormattedMessage } from '@/theme/FormattedMessage';
-import messages from '../messages';
 
 export function LinkArea() {
   return (

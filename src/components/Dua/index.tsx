@@ -7,8 +7,9 @@
 
 import { Container } from '@mui/material';
 
-import { dua } from './content';
 import { Typography } from '@/theme/Typography';
+
+import { dua } from './content';
 
 interface DuaProps {
   contentId: keyof typeof dua;

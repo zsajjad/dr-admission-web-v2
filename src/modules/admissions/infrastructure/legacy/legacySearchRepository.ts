@@ -1,5 +1,5 @@
-import type { AdmissionsControllerSearchLegacyParams, LegacyStudentRow } from '@/providers/service/app.schemas';
 import { admissionsControllerSearchLegacy } from '@/providers/service/admissions/admissions';
+import type { AdmissionsControllerSearchLegacyParams, LegacyStudentRow } from '@/providers/service/app.schemas';
 
 export type LegacySearchResult = {
   count: number;

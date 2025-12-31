@@ -453,7 +453,6 @@ export interface ListAttendanceDaysResponseDto {
 export type BulkAttendanceRecordItemDtoStatus =
   (typeof BulkAttendanceRecordItemDtoStatus)[keyof typeof BulkAttendanceRecordItemDtoStatus];
 
- 
 export const BulkAttendanceRecordItemDtoStatus = {
   PRESENT: 'PRESENT',
   ABSENT: 'ABSENT',
@@ -478,7 +477,6 @@ export interface BulkUpsertAttendanceRecordsResponseDto {
 
 export type AttendanceSummaryRowStatus = (typeof AttendanceSummaryRowStatus)[keyof typeof AttendanceSummaryRowStatus];
 
- 
 export const AttendanceSummaryRowStatus = {
   PRESENT: 'PRESENT',
   ABSENT: 'ABSENT',
@@ -503,7 +501,6 @@ export interface AttendanceSummaryResponseDto {
 export type StudentAttendanceHistoryRowStatus =
   (typeof StudentAttendanceHistoryRowStatus)[keyof typeof StudentAttendanceHistoryRowStatus];
 
- 
 export const StudentAttendanceHistoryRowStatus = {
   PRESENT: 'PRESENT',
   ABSENT: 'ABSENT',
@@ -530,7 +527,6 @@ export interface StudentAttendanceHistoryResponseDto {
  */
 export type CreateClassLevelDtoGender = (typeof CreateClassLevelDtoGender)[keyof typeof CreateClassLevelDtoGender];
 
- 
 export const CreateClassLevelDtoGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -554,7 +550,6 @@ export interface CreateClassLevelDto {
  */
 export type ClassLevelGender = (typeof ClassLevelGender)[keyof typeof ClassLevelGender];
 
- 
 export const ClassLevelGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -608,7 +603,6 @@ export interface DetailClassLevelsResponseDto {
  */
 export type UpdateClassLevelDtoGender = (typeof UpdateClassLevelDtoGender)[keyof typeof UpdateClassLevelDtoGender];
 
- 
 export const UpdateClassLevelDtoGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -639,7 +633,6 @@ export interface UpdateClassLevelResponseDto {
 export type LegacyAdmissionPrefillGender =
   (typeof LegacyAdmissionPrefillGender)[keyof typeof LegacyAdmissionPrefillGender];
 
- 
 export const LegacyAdmissionPrefillGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -670,6 +663,8 @@ export interface LegacyAdmissionPrefill {
   identityNumber?: string;
   /** schoolName */
   schoolName?: string;
+  /** schoolClass */
+  schoolClass?: string;
   /** lastYearClass */
   lastYearClass?: string;
   /** vanRequired */
@@ -694,6 +689,8 @@ export interface LegacyAdmissionRaw {
 export interface LegacyStudentRow {
   /** id */
   id: string;
+  /** true if an admission already exists for this phone */
+  alreadyRegistered: boolean;
   /** grNumber (legacy gr_no) */
   grNumber?: string;
   /** name */
@@ -726,7 +723,6 @@ export interface SearchLegacyAdmissionsResponseDto {
 
 export type CreateAdmissionDtoGender = (typeof CreateAdmissionDtoGender)[keyof typeof CreateAdmissionDtoGender];
 
- 
 export const CreateAdmissionDtoGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -758,6 +754,8 @@ export interface CreateAdmissionDto {
   identityNumber?: string;
   /** schoolName */
   schoolName?: string;
+  /** schoolClass */
+  schoolClass?: string;
   /** lastYearClass */
   lastYearClass?: string;
   /** vanRequired */
@@ -781,7 +779,6 @@ export interface AdmissionSession {
 
 export type AdmissionStudentGender = (typeof AdmissionStudentGender)[keyof typeof AdmissionStudentGender];
 
- 
 export const AdmissionStudentGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -842,7 +839,6 @@ export interface AdmissionArea {
  */
 export type AdmissionClassLevelGender = (typeof AdmissionClassLevelGender)[keyof typeof AdmissionClassLevelGender];
 
- 
 export const AdmissionClassLevelGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -863,7 +859,6 @@ export interface AdmissionClassLevel {
 
 export type AdmissionStatus = (typeof AdmissionStatus)[keyof typeof AdmissionStatus];
 
- 
 export const AdmissionStatus = {
   UNVERIFIED: 'UNVERIFIED',
   VERIFIED: 'VERIFIED',
@@ -889,6 +884,8 @@ export interface Admission {
   classLevel: AdmissionClassLevel;
   /** schoolName */
   schoolName?: string;
+  /** schoolClass */
+  schoolClass?: string;
   /** lastYearClass */
   lastYearClass?: string;
   /** vanRequired */
@@ -937,7 +934,6 @@ export interface DetailAdmissionResponseDto {
 
 export type UpdateAdmissionDtoGender = (typeof UpdateAdmissionDtoGender)[keyof typeof UpdateAdmissionDtoGender];
 
- 
 export const UpdateAdmissionDtoGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -965,6 +961,8 @@ export interface UpdateAdmissionDto {
   identityNumber?: string;
   /** schoolName */
   schoolName?: string;
+  /** schoolClass */
+  schoolClass?: string;
   /** lastYearClass */
   lastYearClass?: string;
   /** vanRequired */
@@ -988,7 +986,6 @@ export interface UpdateAdmissionResponseDto {
 export type UpdateAdmissionStatusDtoStatus =
   (typeof UpdateAdmissionStatusDtoStatus)[keyof typeof UpdateAdmissionStatusDtoStatus];
 
- 
 export const UpdateAdmissionStatusDtoStatus = {
   UNVERIFIED: 'UNVERIFIED',
   VERIFIED: 'VERIFIED',
@@ -1139,7 +1136,6 @@ export interface QuestionSetSession {
 export type QuestionSetClassLevelGender =
   (typeof QuestionSetClassLevelGender)[keyof typeof QuestionSetClassLevelGender];
 
- 
 export const QuestionSetClassLevelGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -1350,7 +1346,6 @@ export type AssetsControllerUploadPublicParams = {
 export type AssetsControllerUploadPublicType =
   (typeof AssetsControllerUploadPublicType)[keyof typeof AssetsControllerUploadPublicType];
 
- 
 export const AssetsControllerUploadPublicType = {
   IMAGE: 'IMAGE',
   VIDEO: 'VIDEO',
@@ -1391,7 +1386,6 @@ export type BranchControllerFindAllParams = {
 export type BranchControllerFindAllSortOrder =
   (typeof BranchControllerFindAllSortOrder)[keyof typeof BranchControllerFindAllSortOrder];
 
- 
 export const BranchControllerFindAllSortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -1400,7 +1394,6 @@ export const BranchControllerFindAllSortOrder = {
 export type BranchControllerFindAllSortBy =
   (typeof BranchControllerFindAllSortBy)[keyof typeof BranchControllerFindAllSortBy];
 
- 
 export const BranchControllerFindAllSortBy = {
   id: 'id',
   code: 'code',
@@ -1466,7 +1459,6 @@ export type AreaControllerFindAllParams = {
 export type AreaControllerFindAllSortOrder =
   (typeof AreaControllerFindAllSortOrder)[keyof typeof AreaControllerFindAllSortOrder];
 
- 
 export const AreaControllerFindAllSortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -1475,7 +1467,6 @@ export const AreaControllerFindAllSortOrder = {
 export type AreaControllerFindAllSortBy =
   (typeof AreaControllerFindAllSortBy)[keyof typeof AreaControllerFindAllSortBy];
 
- 
 export const AreaControllerFindAllSortBy = {
   id: 'id',
   branchId: 'branchId',
@@ -1534,7 +1525,6 @@ export type ClassLevelControllerFindAllParams = {
 export type ClassLevelControllerFindAllSortOrder =
   (typeof ClassLevelControllerFindAllSortOrder)[keyof typeof ClassLevelControllerFindAllSortOrder];
 
- 
 export const ClassLevelControllerFindAllSortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -1543,7 +1533,6 @@ export const ClassLevelControllerFindAllSortOrder = {
 export type ClassLevelControllerFindAllGender =
   (typeof ClassLevelControllerFindAllGender)[keyof typeof ClassLevelControllerFindAllGender];
 
- 
 export const ClassLevelControllerFindAllGender = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -1552,7 +1541,6 @@ export const ClassLevelControllerFindAllGender = {
 export type ClassLevelControllerFindAllSortBy =
   (typeof ClassLevelControllerFindAllSortBy)[keyof typeof ClassLevelControllerFindAllSortBy];
 
- 
 export const ClassLevelControllerFindAllSortBy = {
   id: 'id',
   age: 'age',
@@ -1601,7 +1589,6 @@ export type AdmissionsControllerSearchLegacyParams = {
 export type AdmissionsControllerSearchLegacySortOrder =
   (typeof AdmissionsControllerSearchLegacySortOrder)[keyof typeof AdmissionsControllerSearchLegacySortOrder];
 
- 
 export const AdmissionsControllerSearchLegacySortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -1610,7 +1597,6 @@ export const AdmissionsControllerSearchLegacySortOrder = {
 export type AdmissionsControllerSearchLegacySortBy =
   (typeof AdmissionsControllerSearchLegacySortBy)[keyof typeof AdmissionsControllerSearchLegacySortBy];
 
- 
 export const AdmissionsControllerSearchLegacySortBy = {
   grNo: 'grNo',
   name: 'name',
@@ -1679,7 +1665,6 @@ export type AdmissionsControllerFindAllParams = {
 export type AdmissionsControllerFindAllSortOrder =
   (typeof AdmissionsControllerFindAllSortOrder)[keyof typeof AdmissionsControllerFindAllSortOrder];
 
- 
 export const AdmissionsControllerFindAllSortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -1688,7 +1673,6 @@ export const AdmissionsControllerFindAllSortOrder = {
 export type AdmissionsControllerFindAllStatus =
   (typeof AdmissionsControllerFindAllStatus)[keyof typeof AdmissionsControllerFindAllStatus];
 
- 
 export const AdmissionsControllerFindAllStatus = {
   UNVERIFIED: 'UNVERIFIED',
   VERIFIED: 'VERIFIED',
@@ -1699,7 +1683,6 @@ export const AdmissionsControllerFindAllStatus = {
 export type AdmissionsControllerFindAllSortBy =
   (typeof AdmissionsControllerFindAllSortBy)[keyof typeof AdmissionsControllerFindAllSortBy];
 
- 
 export const AdmissionsControllerFindAllSortBy = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

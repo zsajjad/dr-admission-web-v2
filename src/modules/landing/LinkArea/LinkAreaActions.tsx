@@ -1,9 +1,11 @@
-import { Box, Button } from '@mui/material';
 import Link from 'next/link';
+
+import { Box, Button } from '@mui/material';
 
 import { FormattedMessage } from '@/theme/FormattedMessage';
 
 import messages from '../messages';
+
 import { styles } from './styles';
 
 export function LinkAreaActions(props: { onLegacyClick: () => void }) {

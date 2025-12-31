@@ -1,14 +1,14 @@
 'use client';
 
-import { PageContainer } from '@/theme/Page';
-
 import { Dua } from '@/components/Dua';
 
+import { PageContainer } from '@/theme/Page';
+
+import { LandingBackground } from './Background';
+import { LandingBranches } from './Branches';
 import Footer from './Footer';
 import { Intro } from './Intro';
 import { LinkArea } from './LinkArea/LinkArea';
-import { LandingBackground } from './Background';
-import { LandingBranches } from './Branches';
 
 export function LandingPage() {
   return (
