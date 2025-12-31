@@ -74,6 +74,6 @@ export default defineMessages({
   },
   nasiranDescription: {
     id: 'app.landing.nasiranDescription',
-    defaultMessage: ' ( عمر 18 - 22 سال ) طلباء و طالبات کے لئے',
+    defaultMessage: ' ( عمر 18 - 24 سال ) طلباء و طالبات کے لئے',
   },
 });
