@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { AdmissionSuccessPage } from './success-page';
+import { SuccessPage } from '@/modules/admissions/presentation/pages/success';
 
 export const metadata: Metadata = {
   title: 'Admission Submitted',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page({ searchParams }: { searchParams?: { gr?: string } }) {
-  return <AdmissionSuccessPage grToken={searchParams?.gr} />;
+  return <SuccessPage grToken={searchParams?.gr} />;
 }

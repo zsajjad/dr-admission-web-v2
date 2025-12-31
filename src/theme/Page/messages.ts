@@ -5,7 +5,7 @@ const domain = 'app.page';
 const messages = defineMessages({
   footer: {
     id: `${domain}.footer`,
-    defaultMessage: '© {year} موقع کا حقوق محفوظ ہے۔',
+    defaultMessage: '© {year} دانشگاہ رمضان',
   },
   privacyPolicy: {
     id: `${domain}.privacyPolicy`,
