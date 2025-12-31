@@ -1,0 +1,58 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "tsconfig.tsbuildinfo",
+    "tsconfig.json",
+    "src/translations/ur.json",
+    "api/service/api.config.json",
+    "public",
+    "README.md",
+    "scripts"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "urdu-words",
+      "path": "./src/translations/ur.json",
+      "description": "Urdu translations and words from the app"
+    }
+  ],
+  "dictionaries": ["en-US", "ur-PK", "urdu-words"],
+  "words": [
+    "clickaway",
+    "commitlint",
+    "danishgaheramzan",
+    "formatjs",
+    "fullwide",
+    "hanidec",
+    "highp",
+    "jsqr",
+    "KHTML",
+    "linv",
+    "mathbold",
+    "mathsans",
+    "mehr",
+    "muhibaan",
+    "mymr",
+    "nasiran",
+    "Nastaliq",
+    "NEXTAPP",
+    "nextauth",
+    "NEXTAUTH",
+    "officedocument",
+    "openxmlformats",
+    "orya",
+    "PAYPAK",
+    "PDMS",
+    "postbuild",
+    "Saleem",
+    "spreadsheetml",
+    "tamldec",
+    "tibt",
+    "tiflan",
+    "UNIONPAY",
+    "wght",
+    "اردو"
+  ],
+  "ignoreWords": [],
+  "import": []
+}
