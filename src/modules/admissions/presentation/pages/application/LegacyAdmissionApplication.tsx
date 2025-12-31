@@ -22,8 +22,14 @@ import {
 import { decodeLegacyLookupToken, encodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookupToken';
 
 import { getAdmissionFormSchema, type AdmissionFormValues } from './admissionFormSchema';
-import { AreaSelect, LegacySummaryCard, SectionCard, StickySubmitBar, TextField, VanSelect } from './components';
-import { useAreaHasVan } from './hooks/useSelectedArea';
+import {
+  AreaSection,
+  EducationSection,
+  LegacySummaryCard,
+  SectionCard,
+  StickySubmitBar,
+  TextField,
+} from './components';
 import messages from './messages';
 import { NewAdmissionApplication } from './NewAdmissionApplication';
 import { getAdmissionFormSchemaMessages } from './schemaMessages';
@@ -42,9 +48,9 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
 
   const { submit, mutation, missingSessionId } = useSubmitAdmissionApplication();
 
-  const [prefill, setPrefill] = useState<
-    Partial<LegacySearchResult['data'][0]['prefill'] & { grNumber?: string; _legacyQuery?: string }> | null
-  >(null);
+  const [prefill, setPrefill] = useState<Partial<
+    LegacySearchResult['data'][0]['prefill'] & { grNumber?: string; _legacyQuery?: string }
+  > | null>(null);
 
   const legacyPrefillMutation = useMutation({
     mutationFn: async (query: string) => searchLegacyAdmissions(query),
@@ -102,6 +108,9 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
       studentPhotoFile: null,
       isWorking: prefill?.isWorking ?? false,
       isMarried: prefill?.isMarried ?? false,
+
+      identityProofAssetId: null,
+      studentPhotoAssetId: null,
     }),
     [prefill],
   );
@@ -118,11 +127,6 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
     validateOnMount: true,
     onSubmit: async (values, helpers) => {
       helpers.setStatus(undefined);
-
-      if (values.identityProofFile || values.studentPhotoFile) {
-        helpers.setStatus(intl.formatMessage(messages.docUploadNotWired));
-        return;
-      }
 
       if (missingSessionId) {
         helpers.setStatus(intl.formatMessage(messages.missingSessionId));
@@ -142,14 +146,6 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
 
   const { values, setFieldValue } = formik;
 
-  const areaHasVan = useAreaHasVan(values.branchId || undefined, values.areaId || undefined);
-  useEffect(() => {
-    const gender = values.gender as 'MALE' | 'FEMALE';
-    if (!areaHasVan[gender] && values.vanRequired !== false) {
-      void setFieldValue('vanRequired', false);
-    }
-  }, [areaHasVan, setFieldValue, values.vanRequired, values.gender]);
-
   // City is fixed.
   useEffect(() => {
     if (values.localityOrCity !== 'Karachi') {
@@ -158,7 +154,13 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
   }, [setFieldValue, values.localityOrCity]);
 
   const scrollToFirstError = (errors: FormikErrors<AdmissionFormValues>) => {
-    const order: Array<keyof AdmissionFormValues> = ['areaId', 'addressLine', 'alternatePhone', 'schoolName', 'vanRequired'];
+    const order: Array<keyof AdmissionFormValues> = [
+      'areaId',
+      'addressLine',
+      'alternatePhone',
+      'schoolName',
+      'vanRequired',
+    ];
     const first = order.find((k) => !!errors[k]);
     const targetName = first ?? (Object.keys(errors)[0] as keyof AdmissionFormValues | undefined);
     if (!targetName) return;
@@ -247,28 +249,7 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
                   prefill={prefill}
                 />
 
-                <SectionCard titleMessage={messages.sectionAddress} descriptionMessage={messages.sectionAddressDesc}>
-                  <Stack spacing={2}>
-                    <AreaSelect
-                      labelMessage={messages.labelArea}
-                      loadingMessage={messages.dropdownLoading}
-                      emptyMessage={messages.dropdownEmpty}
-                      selectBranchFirstMessage={messages.selectBranchFirst}
-                    />
-                    <TextField
-                      name="addressLine"
-                      labelMessage={messages.labelAddress}
-                      multiline
-                      minRows={3}
-                      inputDir="ltr"
-                    />
-                    {areaHasVan[values.gender as 'MALE' | 'FEMALE'] ? (
-                      <Stack spacing={1} sx={{ direction: 'rtl' }}>
-                        <VanSelect labelMessage={messages.labelVanRequired} />
-                      </Stack>
-                    ) : null}
-                  </Stack>
-                </SectionCard>
+                <AreaSection />
 
                 <SectionCard
                   titleMessage={messages.sectionContact}
@@ -284,17 +265,7 @@ export function LegacyAdmissionApplication({ legacyToken }: { legacyToken: strin
                     />
                   </Stack>
                 </SectionCard>
-
-                <SectionCard
-                  titleMessage={messages.sectionEducation}
-                  descriptionMessage={messages.sectionEducationDesc}
-                >
-                  <Stack spacing={1}>
-                    {/* School name + class are editable in legacy */}
-                    <TextField name="schoolName" labelMessage={messages.labelSchool} inputDir="ltr" />
-                    <TextField name="schoolClass" labelMessage={messages.labelSchoolClass} inputDir="ltr" />
-                  </Stack>
-                </SectionCard>
+                <EducationSection />
 
                 {/* Van selection moved into Address section (area-specific). */}
               </Stack>

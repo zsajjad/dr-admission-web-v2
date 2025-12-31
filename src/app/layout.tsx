@@ -14,6 +14,7 @@ import { CustomThemeProvider } from '@/registry/Theme';
 import { FirebaseObserver } from '@/platform/Firebase/FirebaseObserver';
 
 import { LocaleProvider } from '@/contexts/LocaleContext';
+import { SnackbarContextProvider } from '@/contexts/SnackbarContext';
 
 import { config } from '@/config';
 
@@ -71,7 +72,9 @@ export default function RootLayout({
             <AppRouterCacheProvider>
               <ReactQueryRegistry>
                 <CustomThemeProvider>
-                  <IntlRegistry>{children}</IntlRegistry>
+                  <IntlRegistry>
+                    <SnackbarContextProvider>{children}</SnackbarContextProvider>
+                  </IntlRegistry>
                 </CustomThemeProvider>
               </ReactQueryRegistry>
             </AppRouterCacheProvider>

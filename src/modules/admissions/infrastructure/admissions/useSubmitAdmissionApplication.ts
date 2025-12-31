@@ -29,8 +29,13 @@ export function useSubmitAdmissionApplication() {
         address: [values.addressLine.trim(), values.localityOrCity.trim()].filter(Boolean).join('\n') || undefined,
         identityNumber: values.identityNumber.trim() || undefined,
         schoolName: values.schoolName.trim() || undefined,
+        schoolClass: values.schoolClass.trim() || undefined,
         lastYearClass: values.lastYearClass.trim() || undefined,
         vanRequired: values.vanRequired ?? undefined,
+        isWorking: values.isWorking ?? undefined,
+        isMarried: values.isMarried ?? undefined,
+        identityProofAssetId: values.identityProofAssetId ?? undefined,
+        photoAssetId: values.studentPhotoAssetId ?? undefined,
       },
     });
   };

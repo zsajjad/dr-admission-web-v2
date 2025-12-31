@@ -16,6 +16,8 @@ export type RtlSelectFieldProps = Omit<TextFieldProps, 'select' | 'children' | '
 };
 
 export function RtlSelectField({ options, SelectProps, slotProps, onChange, ...props }: RtlSelectFieldProps) {
+  const typedSlotProps = slotProps as TextFieldProps['slotProps'] | undefined;
+
   return (
     <RtlTextField
       {...props}
@@ -42,8 +44,15 @@ export function RtlSelectField({ options, SelectProps, slotProps, onChange, ...p
       slotProps={{
         ...slotProps,
         htmlInput: {
-          ...(slotProps as TextFieldProps['slotProps'])?.htmlInput,
+          ...typedSlotProps?.htmlInput,
           dir: 'rtl',
+        },
+        inputLabel: {
+          // ...(typedSlotProps?.inputLabel as any),
+          sx: {
+            // ...(typedSlotProps?.inputLabel as any)?.sx,
+            paddingRight: '10px',
+          },
         },
       }}
     >

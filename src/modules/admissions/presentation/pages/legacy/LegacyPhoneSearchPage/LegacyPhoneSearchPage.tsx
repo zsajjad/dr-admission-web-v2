@@ -108,23 +108,29 @@ export function LegacyPhoneSearchPage() {
     return null;
   }, [admissionSearchQuery.isError, admissionSearchQuery.isSuccess, admissionSearchQuery.data?.data?.length]);
 
-  const onItemSelect = useCallback((row: Partial<LegacyStudentRow>) => {
-    if (!row.grNumber || !row.phone) return;
-    const lookupQuery = row.grNumber || row.phone;
-    const token = encodeLegacyLookupToken(lookupQuery);
-    router.push(`/admissions/application?legacy=${encodeURIComponent(token)}`);
-  }, [router]);
+  const onItemSelect = useCallback(
+    (row: Partial<LegacyStudentRow>) => {
+      if (!row.grNumber || !row.phone) return;
+      const lookupQuery = row.grNumber || row.phone;
+      const token = encodeLegacyLookupToken(lookupQuery);
+      router.push(`/admissions/application?legacy=${encodeURIComponent(token)}`);
+    },
+    [router],
+  );
 
   const refinedData: RefinedData = useMemo<RefinedData>(() => {
     if (!admissionSearchQuery.data?.data) return { notAlreadyRegistered: [], alreadyRegistered: [] };
-    return admissionSearchQuery.data.data.reduce<RefinedData>((acc: RefinedData, row: LegacyStudentRow) => {
-      if (row.alreadyRegistered) {
-        acc.alreadyRegistered.push(row);
-      } else {
-        acc.notAlreadyRegistered.push(row);
-      }
-      return acc;
-    }, { notAlreadyRegistered: [], alreadyRegistered: [] });
+    return admissionSearchQuery.data.data.reduce<RefinedData>(
+      (acc: RefinedData, row: LegacyStudentRow) => {
+        if (row.alreadyRegistered) {
+          acc.alreadyRegistered.push(row);
+        } else {
+          acc.notAlreadyRegistered.push(row);
+        }
+        return acc;
+      },
+      { notAlreadyRegistered: [], alreadyRegistered: [] },
+    );
   }, [admissionSearchQuery.data?.data]);
   const { notAlreadyRegistered, alreadyRegistered } = refinedData;
 
@@ -217,8 +223,10 @@ export function LegacyPhoneSearchPage() {
         ) : null}
         {admissionSearchQuery.isSuccess && alreadyRegistered?.length ? (
           <Box sx={{ mt: 2 }}>
-            <Alert severity="info" sx={{ direction: 'rtl', textAlign: 'right', fontFamily: 'var(--font-mehr)', gap: 1 }}
-            icon={<CheckCircleOutlined />}
+            <Alert
+              severity="info"
+              sx={{ direction: 'rtl', textAlign: 'right', fontFamily: 'var(--font-mehr)', gap: 1 }}
+              icon={<CheckCircleOutlined />}
             >
               <FormattedMessage message={messages.alreadyRegisteredHeading} language="ur" />
             </Alert>

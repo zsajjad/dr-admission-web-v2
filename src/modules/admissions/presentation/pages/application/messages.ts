@@ -192,6 +192,14 @@ const messages = defineMessages({
     id: `${domain}.labelSchoolClass`,
     defaultMessage: 'جماعت',
   },
+  labelIsWorking: {
+    id: `${domain}.labelIsWorking`,
+    defaultMessage: 'کیا طالب علم کام کرتا ہے؟',
+  },
+  labelIsMarried: {
+    id: `${domain}.labelIsMarried`,
+    defaultMessage: 'کیا طالب علم شادی شدہ ہے؟',
+  },
 
   labelVanRequired: {
     id: `${domain}.labelVanRequired`,
@@ -243,6 +251,14 @@ const messages = defineMessages({
     id: `${domain}.errDobTooYoung`,
     defaultMessage: 'کم از کم عمر 6 سال ہونی چاہیے۔',
   },
+  errDobTooEarly: {
+    id: `${domain}.errDobTooEarly`,
+    defaultMessage: 'تاریخِ پیدائش 1 جنوری 2001 کے بعد ہونی چاہیے۔',
+  },
+  errDobTooLate: {
+    id: `${domain}.errDobTooLate`,
+    defaultMessage: 'تاریخِ پیدائش 31 دسمبر 2020 سے پہلے ہونی چاہیے۔',
+  },
   errGenderRequired: {
     id: `${domain}.errGenderRequired`,
     defaultMessage: 'جنس منتخب کرنا ضروری ہے۔',
@@ -258,6 +274,10 @@ const messages = defineMessages({
   errPhoneLength: {
     id: `${domain}.errPhoneLength`,
     defaultMessage: 'فون نمبر مکمل 11 ہندسوں کا ہونا چاہیے۔',
+  },
+  errPhoneFormat: {
+    id: `${domain}.errPhoneFormat`,
+    defaultMessage: 'فون نمبر 03 سے شروع ہونا چاہیے (مثال: 03001234567)۔ ڈیش استعمال نہ کریں۔',
   },
   errIdentityDigitsOnly: {
     id: `${domain}.errIdentityDigitsOnly`,
@@ -283,6 +303,10 @@ const messages = defineMessages({
     id: `${domain}.errEnglishOnly`,
     defaultMessage: 'براہِ کرم یہ معلومات صرف انگریزی میں درج کریں۔',
   },
+  errIdentityProofRequired: {
+    id: `${domain}.errIdentityProofRequired`,
+    defaultMessage: 'شناختی دستاویز کی تصویر ضروری ہے۔',
+  },
   yes: {
     id: `${domain}.yes`,
     defaultMessage: 'ہاں',
@@ -290,6 +314,15 @@ const messages = defineMessages({
   no: {
     id: `${domain}.no`,
     defaultMessage: 'نہیں',
+  },
+  sectionIdentityProof: {
+    id: `${domain}.sectionIdentityProof`,
+    defaultMessage: 'شناختی دستاویز',
+  },
+  sectionIdentityProofDesc: {
+    id: `${domain}.sectionIdentityProofDesc`,
+    defaultMessage:
+      'طالبِ علم کا قومی شناختی کارڈ، ب فارم یا برتھ سرٹیفیکیٹ منسلک کریں۔ تصویر میں طالبِ علم کی تاریخِ پیدائش ضرور واضح نظر آرہی ہو',
   },
 });
 

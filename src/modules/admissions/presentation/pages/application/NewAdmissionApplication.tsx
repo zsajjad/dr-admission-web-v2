@@ -10,6 +10,8 @@ import { Alert, Container, Stack } from '@mui/material';
 
 import { FormikProvider, type FormikErrors, type FormikTouched, useFormik } from 'formik';
 
+import { ImageUploader } from '@/components/ImageUploader';
+
 import { PageContainer } from '@/theme/Page';
 
 import { useSubmitAdmissionApplication } from '@/modules/admissions/infrastructure/admissions/useSubmitAdmissionApplication';
@@ -17,15 +19,15 @@ import { encodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookup
 
 import { getAdmissionFormSchema, type AdmissionFormValues } from './admissionFormSchema';
 import {
-  AreaSelect,
+  AreaSection,
   BranchSelect,
+  DateOfBirthField,
+  EducationSection,
   GenderSelect,
   SectionCard,
   StickySubmitBar,
   TextField,
-  VanSelect,
 } from './components';
-import { useAreaHasVan } from './hooks/useSelectedArea';
 import messages from './messages';
 import { getAdmissionFormSchemaMessages } from './schemaMessages';
 
@@ -42,10 +44,13 @@ const initialValues: AdmissionFormValues = {
   addressLine: '',
   localityOrCity: 'Karachi',
   schoolName: '',
+  schoolClass: '',
   lastYearClass: '',
   vanRequired: null,
-  identityProofFile: null,
-  studentPhotoFile: null,
+  identityProofAssetId: null,
+  studentPhotoAssetId: null,
+  isWorking: false,
+  isMarried: false,
 };
 
 export function NewAdmissionApplication() {
@@ -62,11 +67,6 @@ export function NewAdmissionApplication() {
     }),
     onSubmit: async (values, helpers) => {
       helpers.setStatus(undefined);
-
-      if (values.identityProofFile || values.studentPhotoFile) {
-        helpers.setStatus(intl.formatMessage(messages.docUploadNotWired));
-        return;
-      }
 
       if (missingSessionId) {
         helpers.setStatus(intl.formatMessage(messages.missingSessionId));
@@ -89,14 +89,6 @@ export function NewAdmissionApplication() {
   });
 
   const { values, setFieldValue } = formik;
-
-  // If selected area doesn't have van, force value to false and keep it out of the UI.
-  const computedAreaHasVan = useAreaHasVan(values.branchId || undefined, values.areaId || undefined);
-  useEffect(() => {
-    if (!computedAreaHasVan && values.vanRequired !== false) {
-      void setFieldValue('vanRequired', false);
-    }
-  }, [computedAreaHasVan, setFieldValue, values.vanRequired]);
 
   // City is fixed.
   useEffect(() => {
@@ -207,13 +199,7 @@ export function NewAdmissionApplication() {
                   <Stack spacing={2}>
                     <TextField name="name" labelMessage={messages.labelStudentName} inputDir="ltr" />
                     <TextField name="fatherName" labelMessage={messages.labelFatherName} inputDir="ltr" />
-                    <TextField
-                      name="dateOfBirth"
-                      labelMessage={messages.labelDob}
-                      type="date"
-                      slotProps={{ inputLabel: { shrink: true } }}
-                      inputDir="ltr"
-                    />
+                    <DateOfBirthField labelMessage={messages.labelDob} />
                     <GenderSelect
                       name="gender"
                       labelMessage={messages.labelGender}
@@ -241,41 +227,23 @@ export function NewAdmissionApplication() {
                     />
                   </Stack>
                 </SectionCard>
-
-                <SectionCard titleMessage={messages.sectionAddress} descriptionMessage={messages.sectionAddressDesc}>
-                  <Stack spacing={2}>
-                    <AreaSelect
-                      labelMessage={messages.labelArea}
-                      loadingMessage={messages.dropdownLoading}
-                      emptyMessage={messages.dropdownEmpty}
-                      selectBranchFirstMessage={messages.selectBranchFirst}
-                    />
-                    <TextField
-                      name="addressLine"
-                      labelMessage={messages.labelAddress}
-                      multiline
-                      minRows={3}
-                      inputDir="ltr"
-                    />
-                    {computedAreaHasVan ? (
-                      <Stack spacing={1} sx={{ direction: 'rtl' }}>
-                        <VanSelect labelMessage={messages.labelVanRequired} />
-                      </Stack>
-                    ) : null}
-                  </Stack>
-                </SectionCard>
+                <AreaSection />
+                <EducationSection />
 
                 <SectionCard
-                  titleMessage={messages.sectionEducation}
-                  descriptionMessage={messages.sectionEducationDesc}
+                  titleMessage={messages.sectionIdentityProof}
+                  descriptionMessage={messages.sectionIdentityProofDesc}
                 >
-                  <Stack spacing={1}>
-                    <TextField name="schoolName" labelMessage={messages.labelSchool} inputDir="ltr" />
-                    <TextField name="schoolClass" labelMessage={messages.labelSchoolClass} inputDir="ltr" />
+                  <Stack spacing={2}>
+                    <ImageUploader
+                      assetId={values.identityProofAssetId}
+                      onSuccess={(assetId) => setFieldValue('identityProofAssetId', assetId)}
+                      onDelete={() => setFieldValue('identityProofAssetId', null)}
+                      category="admission-identity-proof"
+                      type="IMAGE"
+                    />
                   </Stack>
                 </SectionCard>
-
-                {/* Van selection moved into Address section (area-specific). */}
               </Stack>
             </form>
           </FormikProvider>
