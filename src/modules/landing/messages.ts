@@ -58,7 +58,7 @@ export default defineMessages({
   },
   tiflanDescription: {
     id: 'app.landing.tiflanDescription',
-    defaultMessage: '6 تا 9 سال، طلباء و طالبات کے لئے',
+    defaultMessage: ' ( عمر 6 - 9 سال ) طلباء و طالبات کے لئے',
   },
   muhibaanTitle: {
     id: 'app.landing.muhibaanTitle',
@@ -66,7 +66,7 @@ export default defineMessages({
   },
   muhibaanDescription: {
     id: 'app.landing.muhibaanDescription',
-    defaultMessage: '10 تا 17 سال، طلباء و طالبات کے لئے',
+    defaultMessage: ' ( عمر 10 - 17 سال ) طلباء و طالبات کے لئے',
   },
   nasiranTitle: {
     id: 'app.landing.nasiranTitle',
@@ -74,6 +74,6 @@ export default defineMessages({
   },
   nasiranDescription: {
     id: 'app.landing.nasiranDescription',
-    defaultMessage: '18 تا 22 سال، طلباء و طالبات کے لئے',
+    defaultMessage: ' ( عمر 18 - 22 سال ) طلباء و طالبات کے لئے',
   },
 });
