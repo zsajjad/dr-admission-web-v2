@@ -27,7 +27,7 @@ import { useFormik } from 'formik';
 
 import { config } from '@/config';
 import { decodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookupToken';
-import { searchLegacyAdmissions } from '@/modules/admissions/infrastructure/legacy/legacySearchRepository';
+import { LegacySearchResult, searchLegacyAdmissions } from '@/modules/admissions/infrastructure/legacy/legacySearchRepository';
 import { useCreateAdmission } from '@/modules/admissions/infrastructure/admissions/useCreateAdmission';
 import { useAreas } from '@/modules/admissions/infrastructure/referenceData/useAreas';
 import { useBranches } from '@/modules/admissions/infrastructure/referenceData/useBranches';
@@ -55,7 +55,7 @@ export function ApplicationFormPage() {
   const branchesQuery = useBranches();
   const createAdmission = useCreateAdmission();
 
-  const [prefill, setPrefill] = useState<Partial<AdmissionFormValues> | null>(null);
+  const [prefill, setPrefill] = useState<Partial<LegacySearchResult['data'][0]['prefill'] & { city: string }> | null>(null);
   const legacyPrefillMutation = useMutation({
     mutationFn: async (query: string) => searchLegacyAdmissions(query),
   });
@@ -67,7 +67,7 @@ export function ApplicationFormPage() {
       const res = await legacyPrefillMutation.mutateAsync(decodedLegacy.query);
       const row = res.data?.[0];
       if (!row || cancelled) return;
-      setPrefill(row.prefill);
+      setPrefill({ ...row.prefill, city: row.raw.city });
     }
     run();
     return () => {
@@ -89,8 +89,8 @@ export function ApplicationFormPage() {
       phone: prefill?.phone ?? '',
       alternatePhone: '',
 
-      addressLine: prefill?.addressLine ?? '',
-      localityOrCity: prefill?.localityOrCity ?? '',
+      addressLine: prefill?.address ?? '',
+      localityOrCity: prefill?.city ?? '',
 
       schoolName: prefill?.schoolName ?? '',
       lastYearClass: prefill?.lastYearClass ?? '',
