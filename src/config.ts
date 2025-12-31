@@ -25,3 +25,14 @@ export const config: Config = {
   TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '',
   ADMISSIONS_ACTIVE_SESSION_ID: process.env.NEXT_PUBLIC_ADMISSIONS_ACTIVE_SESSION_ID ?? '',
 };
+
+export const firebaseConfig = {
+  apiKey: 'AIzaSyBbw5tP2TvSKr_M32L79PLCL_L7BmNmdv4',
+  authDomain: 'aba-saleh-foundation.firebaseapp.com',
+  databaseURL: 'https://aba-saleh-foundation-default-rtdb.firebaseio.com',
+  projectId: 'aba-saleh-foundation',
+  storageBucket: 'aba-saleh-foundation.appspot.com',
+  messagingSenderId: '812176006323',
+  appId: '1:812176006323:web:532e5a52a712adcaebe4c6',
+  measurementId: 'G-9JT0EMR8B5',
+};

@@ -5,6 +5,8 @@ import localFont from 'next/font/local';
 
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
+import { FirebaseObserver } from '@/platform/Firebase/FirebaseObserver';
+
 import { ErrorBoundaryWrapper } from '@/components/ErrorBoundary';
 
 import { IntlRegistry } from '@/registry/Intl';
@@ -63,6 +65,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content={config.site.name} />
       </head>
       <body>
+        <FirebaseObserver />
         <ErrorBoundaryWrapper>
           <LocaleProvider>
             <AppRouterCacheProvider>

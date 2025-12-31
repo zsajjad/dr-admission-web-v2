@@ -89,7 +89,7 @@ export function LegacyPhoneSearchPage() {
     return null;
   }, [admissionSearchQuery.isSuccess, admissionSearchQuery.data?.data?.length]);
 
-  const onItemSelect = useCallback((row: LegacyStudentRow) => {
+  const onItemSelect = useCallback((row: Partial<LegacyStudentRow>) => {
     if (!row.grNumber || !row.phone) return;
     const lookupQuery = row.grNumber || row.phone;
     const token = encodeLegacyLookupToken(lookupQuery);
@@ -179,17 +179,7 @@ export function LegacyPhoneSearchPage() {
         {admissionSearchQuery.isSuccess && admissionSearchQuery.data?.data?.length ? (
           <List sx={{ direction: 'rtl' }}>
             {admissionSearchQuery.data?.data?.map((row) => (
-              <StudentListItem
-                key={row.id}
-                row={{
-                  ...row,
-                  name: row.name ?? '',
-                  gender: row.gender ?? '',
-                  fatherName: row.fatherName ?? '',
-                  grNumber: row.grNumber ?? '',
-                }}
-                onItemSelect={onItemSelect}
-              />
+              <StudentListItem key={row.id} row={row} onItemSelect={onItemSelect} />
             ))}
           </List>
         ) : null}

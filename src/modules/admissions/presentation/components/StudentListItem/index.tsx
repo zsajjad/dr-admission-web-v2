@@ -7,10 +7,10 @@ import { memoize } from 'lodash';
 
 interface StudentListItemRow {
   id: string;
-  name: string;
-  fatherName: string;
-  grNumber: string;
-  gender: string;
+  name?: string;
+  fatherName?: string;
+  grNumber?: string;
+  gender?: string;
 }
 
 interface StudentListItemProps {
@@ -28,7 +28,7 @@ const getRelationPart = memoize((gender: string) => {
 });
 
 export function StudentListItem({ row, onItemSelect }: StudentListItemProps) {
-  const relation = getRelationPart(row.gender);
+  const relation = getRelationPart(row.gender!);
   const relationPart =
     row.fatherName && relation ? `${relation} ${row.fatherName}` : row.fatherName ? row.fatherName : '';
 

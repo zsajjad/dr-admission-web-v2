@@ -67,20 +67,7 @@ export function ApplicationFormPage() {
       const res = await legacyPrefillMutation.mutateAsync(decodedLegacy.query);
       const row = res.data?.[0];
       if (!row || cancelled) return;
-      setPrefill({
-        name: row.name ?? '',
-        fatherName: row.fatherName ?? '',
-        dateOfBirth: toDateOnly(row.dateOfBirth),
-        // Map free-form legacy gender into our enum; default empty -> user must pick if unknown.
-        gender:
-          typeof row.gender === 'string' && row.gender.toLowerCase().includes('f')
-            ? 'FEMALE'
-            : typeof row.gender === 'string' && row.gender.toLowerCase().includes('m')
-              ? 'MALE'
-              : '',
-        phone: row.phone ?? '',
-        identityNumber: row.identityNumber ?? '',
-      });
+      setPrefill(row.prefill);
     }
     run();
     return () => {
@@ -90,25 +77,25 @@ export function ApplicationFormPage() {
 
   const initialValues: AdmissionFormValues = useMemo(
     () => ({
-      branchId: '',
-      areaId: '',
+      branchId: prefill?.branchId ?? '',
+      areaId: prefill?.areaId ?? '',
 
       name: prefill?.name ?? '',
       fatherName: prefill?.fatherName ?? '',
-      dateOfBirth: prefill?.dateOfBirth ?? '',
+      dateOfBirth: toDateOnly(prefill?.dateOfBirth) ?? '',
       gender: (prefill?.gender as AdmissionFormValues['gender']) ?? '',
       identityNumber: prefill?.identityNumber ?? '',
 
       phone: prefill?.phone ?? '',
       alternatePhone: '',
 
-      addressLine: '',
-      localityOrCity: '',
+      addressLine: prefill?.addressLine ?? '',
+      localityOrCity: prefill?.localityOrCity ?? '',
 
-      schoolName: '',
-      lastYearClass: '',
+      schoolName: prefill?.schoolName ?? '',
+      lastYearClass: prefill?.lastYearClass ?? '',
 
-      vanRequired: null,
+      vanRequired: prefill?.vanRequired ?? null,
 
       identityProofFile: null,
       studentPhotoFile: null,
@@ -217,6 +204,7 @@ export function ApplicationFormPage() {
                       label="Branch"
                       value={formik.values.branchId}
                       onChange={handleBranchChange}
+                      disabled={disableLegacyFields}
                     >
                       {(branchesQuery.data?.data ?? []).map((b) => (
                         <MenuItem key={b.id} value={b.id}>

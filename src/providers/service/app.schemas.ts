@@ -4,6 +4,30 @@
  * dr-core-service
  * OpenAPI spec version: 1.0.0
  */
+export interface AssetDetailResponseDto {
+  id: string;
+  title: string;
+  mimeType: string;
+  /** Short-lived signed URL */
+  signedUrl: string;
+  /** Expiry in seconds */
+  expiresIn: number;
+}
+
+export interface UploadFileRequestDto {
+  /** File to upload */
+  file: Blob;
+}
+
+export interface AssetUploadResponseDto {
+  id: string;
+}
+
+export interface AssetDeleteResponseDto {
+  /** Message of the action */
+  message: string;
+}
+
 export interface AdminLoginRequestDto {
   /** Admin email address */
   email: string;
@@ -603,6 +627,63 @@ export interface UpdateClassLevelResponseDto {
   data?: ClassLevel;
 }
 
+/**
+ * normalized gender (if possible)
+ */
+export type LegacyAdmissionPrefillGender =
+  (typeof LegacyAdmissionPrefillGender)[keyof typeof LegacyAdmissionPrefillGender];
+
+export const LegacyAdmissionPrefillGender = {
+  FEMALE: 'FEMALE',
+  MALE: 'MALE',
+} as const;
+
+export interface LegacyAdmissionPrefill {
+  /** legacyStudentId */
+  legacyStudentId?: string;
+  /** branchId (auto-resolved if possible) */
+  branchId?: string;
+  /** areaId (auto-resolved if possible) */
+  areaId?: string;
+  /** student name */
+  name?: string;
+  /** father/guardian name */
+  fatherName?: string;
+  /** dateOfBirth */
+  dateOfBirth?: string;
+  /** normalized gender (if possible) */
+  gender?: LegacyAdmissionPrefillGender;
+  /** phone */
+  phone?: string;
+  /** alternatePhone */
+  alternatePhone?: string;
+  /** address */
+  address?: string;
+  /** identityNumber (B-Form/CNIC as text) */
+  identityNumber?: string;
+  /** schoolName */
+  schoolName?: string;
+  /** lastYearClass */
+  lastYearClass?: string;
+  /** vanRequired */
+  vanRequired?: boolean;
+  /** isMarried */
+  isMarried?: boolean;
+  /** isWorking */
+  isWorking?: boolean;
+}
+
+export interface LegacyAdmissionRaw {
+  /** legacy grNo */
+  grNo?: string;
+  /** legacy area code (string) */
+  area?: string;
+  /** legacy city */
+  city?: string;
+  /** legacy imageUrl */
+  imageUrl?: string;
+}
+
 export interface LegacyStudentRow {
   /** id */
   id: string;
@@ -622,6 +703,12 @@ export interface LegacyStudentRow {
   identityNumber?: string;
   /** isVerified */
   isVerified?: boolean;
+  /** prefill payload for admission create form */
+  prefill: LegacyAdmissionPrefill;
+  /** warnings produced while building prefill */
+  warnings: string[];
+  /** raw legacy fields for display/debug */
+  raw: LegacyAdmissionRaw;
 }
 
 export interface SearchLegacyAdmissionsResponseDto {
@@ -1138,6 +1225,10 @@ export interface ImportLegacyStudentsResponseDto {
   totalProcessed: number;
   /** Records successfully imported */
   successCount: number;
+  /** Records inserted */
+  insertedCount?: number;
+  /** Records updated */
+  updatedCount?: number;
   /** Records skipped (duplicates) */
   skippedCount: number;
   /** Records that failed to import */
@@ -1233,6 +1324,23 @@ export interface ClearLegacyStudentsResponseDto {
   /** Number of records deleted */
   deletedCount: number;
 }
+
+export type AssetsControllerUploadPublicParams = {
+  type: AssetsControllerUploadPublicType;
+  /**
+   * Category of the asset
+   */
+  category: string;
+};
+
+export type AssetsControllerUploadPublicType =
+  (typeof AssetsControllerUploadPublicType)[keyof typeof AssetsControllerUploadPublicType];
+
+export const AssetsControllerUploadPublicType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  DOCUMENT: 'DOCUMENT',
+} as const;
 
 export type BranchControllerFindAllParams = {
   /**
