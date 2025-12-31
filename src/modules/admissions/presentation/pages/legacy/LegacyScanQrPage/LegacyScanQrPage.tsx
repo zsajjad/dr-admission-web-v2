@@ -7,7 +7,6 @@ import { PageContainer } from '@/theme/Page';
 import { useFormattedMessage } from '@/theme/FormattedMessage';
 import { useAdmissionsControllerSearchLegacy } from '@/providers/service/admissions/admissions';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { LegacyStudentRow } from '@/providers/service/app.schemas';
 import { encodeLegacyLookupToken } from '@/modules/admissions/utils/legacyLookupToken';
 import { useRouter } from 'next/navigation';
 import messages from './messages';

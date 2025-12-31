@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import jsQR from 'jsqr';
@@ -39,6 +41,9 @@ const useQrReader = () => {
   const scanningHint = useFormattedMessage(messages.scanningHint);
 
   const canvasWrapper = useMemo(() => {
+    // This module is imported during Next.js prerender/build. Guard `document`
+    // usage so we don't crash on the server.
+    if (typeof document === 'undefined') return null;
     return document.getElementById('QRInput');
   }, []);
 

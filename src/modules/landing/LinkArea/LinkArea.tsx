@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Box, Button, Container } from '@mui/material';
 
 import { LinkAreaTitle } from './LinkAreaTitle';

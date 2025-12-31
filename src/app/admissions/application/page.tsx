@@ -1,5 +1,12 @@
 import { ApplicationFormPage } from '@/modules/admissions/presentation/pages/application/ApplicationFormPage';
+import { Suspense } from 'react';
 
 export default function Page() {
-  return <ApplicationFormPage />;
+  // ApplicationFormPage uses `useSearchParams()` (client hook).
+  // Next.js requires a Suspense boundary to avoid prerender bailout errors.
+  return (
+    <Suspense fallback={null}>
+      <ApplicationFormPage />
+    </Suspense>
+  );
 }
