@@ -39,15 +39,15 @@ function getReminderDetails(age: number, gender: 'MALE' | 'FEMALE', grNumber: st
   if (ageCategory === 'tiflan') {
     // Tiflan: Jan 1, 2026 at 8 PM PKT
     eventDate = new Date('2026-01-01T20:00:00+05:00');
-    title = 'دانشگاہ رمضانِ کی فیس جمع کرانے کا وقت - Tiflan Fee Submission';
+    title = 'دانشگاہِ رمضانِ کی فیس جمع کرانے کا وقت';
   } else if (isMale) {
     // Boys: Jan 1, 2026 at 7 PM PKT (Saturday)
     eventDate = new Date('2026-01-01T19:00:00+05:00');
-    title = 'دانشگاہ رمضانِ کی فیس جمع کرانے کا وقت - Muhibaan/Nasiraan Boys Fee';
+    title = 'دانشگاہِ رمضانِ کی فیس جمع کرانے کا وقت';
   } else {
     // Girls: Jan 2, 2026 at 7 PM PKT (Sunday)
     eventDate = new Date('2026-01-02T19:00:00+05:00');
-    title = 'دانشگاہ رمضانِ کی فیس جمع کرانے کا وقت - Muhibaan/Nasiraan Girls Fee';
+    title = 'دانشگاہِ رمضانِ کی فیس جمع کرانے کا وقت';
   }
 
   // Reminder is 1 hour before
@@ -82,7 +82,8 @@ function generateICSContent(details: ReminderDetails): string {
     `DTEND:${formatDateForICS(endDate)}`,
     `SUMMARY:${title}`,
     `DESCRIPTION:${description.replace(/\n/g, '\\n')}`,
-    'LOCATION:Madressa',
+    'LOCATION:عزا خانہِ زہرا (ع)', // Latitude and Longitude of the location
+    'GEO:25.0056584;67.073806',
     // Reminder 1 hour before
     'BEGIN:VALARM',
     'TRIGGER:-PT1H',
