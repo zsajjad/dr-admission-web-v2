@@ -1,5 +1,5 @@
 export * from './BranchSelect';
-export * from './AreaSelect';
+export * from './AreaSection';
 export * from './GenderSelect';
 export * from './TextField';
 export * from './DateOfBirthField';
@@ -10,4 +10,3 @@ export * from './StickySubmitBar';
 export * from './VanSelect';
 export * from './LegacySummaryCard';
 export * from './EducationSection';
-export * from './AreaSection';

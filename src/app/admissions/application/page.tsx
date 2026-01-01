@@ -1,10 +1,14 @@
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { ApplicationFormPage } from '@/modules/admissions/presentation/pages/application/ApplicationFormPage';
 
+export const metadata: Metadata = {
+  title: 'داخلہ برائے سال ۱۴۴۷ھ',
+  description: 'داخلہ برائے سال ۱۴۴۷ھ',
+};
+
 export default function Page() {
-  // ApplicationFormPage uses `useSearchParams()` (client hook).
-  // Next.js requires a Suspense boundary to avoid prerender bailout errors.
   return (
     <Suspense fallback={null}>
       <ApplicationFormPage />

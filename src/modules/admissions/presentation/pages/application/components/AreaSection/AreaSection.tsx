@@ -6,14 +6,16 @@ import { Stack } from '@mui/material';
 
 import { useFormikContext } from 'formik';
 
-import type { AdmissionFormValues } from '../admissionFormSchema';
-import { useAreaHasVan } from '../hooks/useSelectedArea';
-import messages from '../messages';
+import { SectionCard } from '@/theme/SectionCard';
+
+import type { AdmissionFormValues } from '../../admissionFormSchema';
+import messages from '../../messages';
+
+import { TextField } from '../TextField';
+import { VanSelect } from '../VanSelect';
 
 import { AreaSelect } from './AreaSelect';
-import { SectionCard } from './SectionCard';
-import { TextField } from './TextField';
-import { VanSelect } from './VanSelect';
+import { useAreaHasVan } from './useSelectedArea';
 
 export function AreaSection() {
   const formik = useFormikContext<AdmissionFormValues>();
