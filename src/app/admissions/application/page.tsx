@@ -1,5 +1,6 @@
-import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+import { Metadata } from 'next';
 
 import { ApplicationFormPage } from '@/modules/admissions/presentation/pages/application/ApplicationFormPage';
 

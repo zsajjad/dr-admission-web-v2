@@ -5,6 +5,7 @@
  * In our theme color i.e Dark Purple for year 2026
  */
 import Image from 'next/image';
+
 import { Box, Container } from '@mui/material';
 
 import { Typography } from '@/theme/Typography';

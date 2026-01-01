@@ -39,6 +39,7 @@ export function AreaSelect({
       onBlur={formik.handleBlur}
       branchId={formik.values.branchId || undefined}
       error={error}
+      helperText={helperText}
       label={intl.formatMessage(labelMessage)}
       loadingText={intl.formatMessage(loadingMessage)}
       emptyText={intl.formatMessage(emptyMessage)}

@@ -10,7 +10,6 @@ import { SectionCard } from '@/theme/SectionCard';
 
 import type { AdmissionFormValues } from '../../admissionFormSchema';
 import messages from '../../messages';
-
 import { TextField } from '../TextField';
 import { VanSelect } from '../VanSelect';
 

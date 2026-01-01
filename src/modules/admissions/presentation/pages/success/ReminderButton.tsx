@@ -3,7 +3,7 @@
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Button } from '@mui/material';
 
-import { FormattedMessage, useFormattedMessage } from '@/theme/FormattedMessage';
+import { FormattedMessage } from '@/theme/FormattedMessage';
 
 import messages from './messages';
 
